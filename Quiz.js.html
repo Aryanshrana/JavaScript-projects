@@ -117,6 +117,16 @@
     function isCorrect(guessString){
         return guessString === fact.answer.toString();
     }
+    let htext = document.getElementsByTagName("h1");
+    htext = htext[0];
+
+    htext.addEventListener("mouseenter", (event) => {
+    htext.textContent = "javascript quiz";
+    });
+
+    htext.addEventListener("mouseenter", (event) => {
+    htext.textContent = "Quiz js";
+    });
 
 
     // TODO 6A: Use a for loop to add a click event listener to each of the optionButtons
