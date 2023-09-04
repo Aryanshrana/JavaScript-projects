@@ -117,6 +117,7 @@
     function isCorrect(guessString){
         return guessString === fact.answer.toString();
     }
+
     let htext = document.getElementsByTagName("h1");
     htext = htext[0];
 
@@ -130,11 +131,21 @@
 
 
     // TODO 6A: Use a for loop to add a click event listener to each of the optionButtons
-            // TODO 6B: Within the event handler function, display the fact's explanation by setting the text of the explanation element
+    // TODO 6B: Within the event handler function, display the fact's explanation by setting the text of the explanation element
 
-
+    for(let butn of optionButtons){
+        butn.addEventListener("click", (event) => {
+            document.getElementById("explanation").textContent = fact.explanation;
             // TODO 7: Within the event handler function, 
             // Use a for loop to disable all the option buttons
+            for(let butn of optionButtons){
+                disable(butn);
+            }
+        });
+    }
+            
+
+            
 
 
             // TODO 8: Within the event handler function,
