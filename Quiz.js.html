@@ -141,19 +141,18 @@
             for(let butn of optionButtons){
                 disable(butn);
             }
-        });
-    }
-            
-
-            
-
-
             // TODO 8: Within the event handler function,
             // Get the guessed value from the clicked button
             // Use a conditional to compare the guess to the fact's answer
             // and add the "correct"/"incorrect" class as appropriate
-
-    
+            if(isCorrect(butn.value)){
+                butn.classList.add("correct");
+            }
+            else{
+                butn.classList.add("incorrect")
+            }
+        });
+    }
 
   </script>
 
