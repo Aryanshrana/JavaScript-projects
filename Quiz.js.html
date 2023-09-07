@@ -50,12 +50,22 @@
         .incorrect {
             background-color: lightpink;
         }
+        .hidden {
+            display: none;
+        }
     </style>
   </head>
+
   <body>
     <header>
-    <h1>Quiz.js</h1>
-    <p>Do you know JS? Find out!</p>
+        <h1>Quiz.js</h1>
+        <p>Do you know JS? Find out!</p>
+        <div id="score">
+            score: 
+            <span id = "correct">0</span>
+            / 
+            <span id = "total">0</span>
+        </div>
     </header>
 
     <main>
@@ -69,38 +79,62 @@
     </div>
 
     <div id="explanation">
-
+        
     </div>
-
+    <button id = "Next" name = "Next Question"  disabled> Next Question</button>
     </main>
 
   
 
   <script type="text/javascript">
 
-    // TODO 1: Declare & assign variables pointing to the corresponding element(s)
+    // Declare & assign variables pointing to the corresponding element(s)
     // statement should be the "statement" div
     // optionButtons should be all the elements within the "options" div
     // explanation should be the "explanation" div
-    const statement = document.getElementById("statement");
+    
     const optionButtons = document.querySelector("#options").children;
     const explanation = document.getElementById("explanation");
+    const nextbutn = document.getElementById("Next");
+    
 
 
-    // TODO 2: Declare & assign a variable called fact
-    // Its value should be an object with a statement, true/false answer, and explanation 
-    const fact = {
-        statement: " '2' + '2' === '4' ",
-        answer: false,
-        explanation: "Adding '2' + '2' shold be equals '22' bcz + operator concatenates the strings "
-    };
+    // Tcreating facts array that hold objects which are questions , their answers and explanation
+    const facts = [
+        {
+            statement: " '2' + '2' === '4' ",
+            answer: false,
+            explanation: "Adding '2' + '2' shold be equals '22' bcz + operator concatenates the strings "
+        },
+        {
+            statement: " JavaScript is dynamic type language ",
+            answer: true,
+            explanation: "JavaScript is dynamic type because typeof of variable is not checked at compile time but a run time"
+        },
+        {
+            statement: " Is Array an object in javaScript ",
+            answer: true,
+            explanation: "Arrays are typed objects in javaScript"
+        },
+        {
+            statement: " Strings in JS are mutable ",
+            answer: false,
+            explanation: "Strings are immutable in JS, but they can be replaced with new string value"
+        },
+        {
+            statement: " 100 == '100' ",
+            answer: true,
+            explanation: " it is true because == performs type coercion before comparison "
+        }
 
+    ];
+    
     
     // TODO 3: Set the text of the statement element to the fact's statement
-    statement.textContent = fact.statement;
-
-        
-
+    let fact;
+    let correct = 0;
+    let total = 0;
+    
     // TODO 4: Declare disable & enable functions to set or remove the "disabled" attribute from a given button element
     // disable(button) should set the button element's attribute "disabled" to the value ""
     function disable(button){
@@ -108,15 +142,70 @@
     }
     // enable(button) should remove the attribute "disabled" from the button element
     function enable(button){
-        button.removeAttribute("disabled");
+        button.removeAttribute("disabled","");
+    }
+    //hidden function to add css class which hide the element ; to hide the explanation before clicking the answer
+    function hide(element){
+        element.classList.add("hidden");
+    }
+    //showing the explanation 
+    function show(element){
+        element.classList.remove("hidden");
     }
 
-    
-    // TODO 5: Declare an isCorrect function that compares a guess to the right answer
-    // isCorrect(guess) should return true if the guess matches the fact's answer
-    function isCorrect(guessString){
-        return guessString === fact.answer.toString();
+    function getNextfact(){
+        fact = facts.shift();// shifting the first element of array facts to fact
+
+        document.getElementById("statement").textContent = fact.statement;//Get the first statement or question in statement id
+
+        hide(explanation); // hide any previous explanation
+        
+        for(let option of optionButtons){
+            //removing any previous class from buttons
+            option.classList.remove("correct");
+            option.classList.remove("incorrect");
+            //enabling the button if it is disabled
+            enable(option);
+        }
+        //disabling the next button 
+        disable(nextbutn);
     }
+    nextbutn.addEventListener("click",getNextfact);
+    for(let butn of optionButtons){
+        butn.addEventListener("click", e => {
+            
+            // disabling both button when one is clicked
+            for(let butn of optionButtons){
+                disable(butn);
+            }
+            //enabling the nextQues buutn for next ques or showing that all ques are done
+            if(facts.length > 0){
+                enable(nextbutn);
+            }
+            else{
+                nextbutn.textContent = "No more questions";
+            }
+            // comparing the guess answer to actual answer
+            const guess = e.target.value;
+            if(guess === fact.answer){
+                e.target.classList.add("correct");
+                correct += 1;
+            }
+            else{
+                e.target.classList.add("incorrect");
+            }
+            //display the explanation
+            explanation.textContent = fact.explanation;
+            show(explanation);
+            //updating the score
+            total += 1;
+            document.getElementById("correct").textContent = correct;
+            document.getElementById("total").textContent = total;
+        });
+    }
+    getNextfact();
+
+    //adding a event on heading that change the heading when mouse moves over it
 
     let htext = document.getElementsByTagName("h1");
     htext = htext[0];
@@ -128,31 +217,6 @@
     htext.addEventListener("mouseout", (event) => {
     htext.textContent = "Quiz js";
     });
-
-
-    // TODO 6A: Use a for loop to add a click event listener to each of the optionButtons
-    // TODO 6B: Within the event handler function, display the fact's explanation by setting the text of the explanation element
-
-    for(let butn of optionButtons){
-        butn.addEventListener("click", (event) => {
-            document.getElementById("explanation").textContent = fact.explanation;
-            // TODO 7: Within the event handler function, 
-            // Use a for loop to disable all the option buttons
-            for(let butn of optionButtons){
-                disable(butn);
-            }
-            // TODO 8: Within the event handler function,
-            // Get the guessed value from the clicked button
-            // Use a conditional to compare the guess to the fact's answer
-            // and add the "correct"/"incorrect" class as appropriate
-            if(isCorrect(butn.value)){
-                butn.classList.add("correct");
-            }
-            else{
-                butn.classList.add("incorrect")
-            }
-        });
-    }
 
   </script>
 
