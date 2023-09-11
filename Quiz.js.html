@@ -61,9 +61,9 @@
         <h1>Quiz.js</h1>
         <p>Do you know JS? Find out!</p>
         <div id="score">
-            score: 
+            " score: "
             <span id = "correct">0</span>
-            / 
+            " / "
             <span id = "total">0</span>
         </div>
     </header>
@@ -81,24 +81,12 @@
     <div id="explanation">
         
     </div>
-    <button id = "Next" name = "Next Question"  disabled> Next Question</button>
+    <button id = "Next" name = "Next"  disabled> Next Question</button>
     </main>
 
   
 
   <script type="text/javascript">
-
-    // Declare & assign variables pointing to the corresponding element(s)
-    // statement should be the "statement" div
-    // optionButtons should be all the elements within the "options" div
-    // explanation should be the "explanation" div
-    
-    const optionButtons = document.querySelector("#options").children;
-    const explanation = document.getElementById("explanation");
-    const nextbutn = document.getElementById("Next");
-    
-
-
     // Tcreating facts array that hold objects which are questions , their answers and explanation
     const facts = [
         {
@@ -128,13 +116,7 @@
         }
 
     ];
-    
-    
-    // TODO 3: Set the text of the statement element to the fact's statement
-    let fact;
-    let correct = 0;
-    let total = 0;
-    
+
     // TODO 4: Declare disable & enable functions to set or remove the "disabled" attribute from a given button element
     // disable(button) should set the button element's attribute "disabled" to the value ""
     function disable(button){
@@ -152,6 +134,18 @@
     function show(element){
         element.classList.remove("hidden");
     }
+    
+    
+    // TODO 3: Set the text of the statement element to the fact's statement
+    let fact;
+    let correct = 0;
+    let total = 0;
+
+    const optionButtons = document.querySelector("#options").children;
+    const explanation = document.getElementById("explanation");
+    const nextbutn = document.getElementById("Next");
+    
+  
 
     function getNextfact(){
         fact = facts.shift();// shifting the first element of array facts to fact
@@ -201,7 +195,7 @@
             total += 1;
             document.getElementById("correct").textContent = correct;
             document.getElementById("total").textContent = total;
-        });
+        })
     }
     getNextfact();
 
