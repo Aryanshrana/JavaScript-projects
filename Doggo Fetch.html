@@ -177,7 +177,7 @@
         image.addEventListener("load", () => {
             // Wait until the image has finished loading before trying to add elements to the page
             frame.replaceChildren(image);
-            renderButtons(choices, correctAnswer);
+            renderButtons(choices, correctAnswer); 
         })
         
     }
@@ -196,9 +196,8 @@
     // TODO 5
     // Asynchronously call the loadQuizData() function,     
     // Then call renderQuiz() with the returned imageUrl, correctAnswer, and choices 
-    
-    
-
+    const[imgURL,Answer,Choices] = await loadQuizData();
+    renderQuiz(imgURL,Answer,Choices);
 
   </script>
 
